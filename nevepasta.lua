@@ -5349,7 +5349,7 @@ local Library do
                     AnchorPoint = Vector2New(0, 1),
                     BorderSizePixel = 0,
                     Position = UDim2New(0, 20, 1, -3),
-                    Size = UDim2New(1, -40, 0, 10),
+                    Size = UDim2New(1, -40, 0, 4),
                     ZIndex = 2,
                     TextSize = 14,
                     BackgroundColor3 = FromRGB(27, 26, 29)
@@ -5372,21 +5372,27 @@ local Library do
 
                 Instances:Create("UICorner", {
                     Parent = Items["Accent"].Instance,
-                    Name = "\0"
+                    Name = "\0",
+                    CornerRadius = UDim.new(0.5, 0)
                 })
 
-                Items["Icon"] = Instances:Create("ImageLabel", {
+                Items["Icon"] = Instances:Create("Frame", {
                     Parent = Items["Accent"].Instance,
                     Name = "\0",
                     BorderColor3 = FromRGB(0, 0, 0),
-                    Size = UDim2New(0, 20, 0, 20),
+                    Size = UDim2New(0, 12, 0, 12),
                     AnchorPoint = Vector2New(0.5, 0.5),
-                    Image = "rbxassetid://117786983271442",
-                    BackgroundTransparency = 1,
-                    Position = UDim2New(1, 5, 0.5, 0),
-                    ZIndex = 2,
+                    BackgroundTransparency = 0,
+                    Position = UDim2New(1, 0, 0.5, 0),
+                    ZIndex = 3,
                     BorderSizePixel = 0,
-                    BackgroundColor3 = FromRGB(255, 255, 255)
+                    BackgroundColor3 = FromRGB(64, 150, 255)
+                })
+
+                Instances:Create("UICorner", {
+                    Parent = Items["Icon"].Instance,
+                    Name = "\0",
+                    CornerRadius = UDim.new(0.5, 0)
                 })
 
                 Instances:Create("UIGradient", {
@@ -5456,11 +5462,11 @@ local Library do
                 })  Items["Value"]:AddToTheme({TextColor3 = "Text"})
 
                 Items["RealSlider"]:OnHover(function()
-                    Items["Icon"]:Tween(TweenInfo.new(0.15, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2New(0, 22, 0, 22)})
+                    Items["Icon"]:Tween(TweenInfo.new(0.15, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2New(0, 14, 0, 14)})
                 end)
 
                 Items["RealSlider"]:OnHoverLeave(function()
-                    Items["Icon"]:Tween(TweenInfo.new(0.15, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2New(0, 20, 0, 20)})
+                    Items["Icon"]:Tween(TweenInfo.new(0.15, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2New(0, 12, 0, 12)})
                 end)
             end
 
