@@ -1,3 +1,7 @@
+-- Made by samet
+-- Join for high quality UI Commissions
+-- https://discord.gg/VhvTd5HV8d
+-- @joestar._3
 
 local Library do 
     local Workspace = game:GetService("Workspace")
@@ -5345,7 +5349,7 @@ local Library do
                     AnchorPoint = Vector2New(0, 1),
                     BorderSizePixel = 0,
                     Position = UDim2New(0, 20, 1, -3),
-                    Size = UDim2New(1, -40, 0, 7),
+                    Size = UDim2New(1, -40, 0, 10),
                     ZIndex = 2,
                     TextSize = 14,
                     BackgroundColor3 = FromRGB(27, 26, 29)
@@ -5375,7 +5379,7 @@ local Library do
                     Parent = Items["Accent"].Instance,
                     Name = "\0",
                     BorderColor3 = FromRGB(0, 0, 0),
-                    Size = UDim2New(0, 16, 0, 12),
+                    Size = UDim2New(0, 20, 0, 20),
                     AnchorPoint = Vector2New(0.5, 0.5),
                     Image = "rbxassetid://117786983271442",
                     BackgroundTransparency = 1,
@@ -5452,11 +5456,11 @@ local Library do
                 })  Items["Value"]:AddToTheme({TextColor3 = "Text"})
 
                 Items["RealSlider"]:OnHover(function()
-                    Items["Icon"]:Tween(TweenInfo.new(0.15, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2New(0, 18, 0, 14)})
+                    Items["Icon"]:Tween(TweenInfo.new(0.15, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2New(0, 22, 0, 22)})
                 end)
 
                 Items["RealSlider"]:OnHoverLeave(function()
-                    Items["Icon"]:Tween(TweenInfo.new(0.15, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2New(0, 16, 0, 12)})
+                    Items["Icon"]:Tween(TweenInfo.new(0.15, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2New(0, 20, 0, 20)})
                 end)
             end
 
