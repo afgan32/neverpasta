@@ -190,7 +190,10 @@ local Library do
             ["Section Background"] = FromRGB(10, 10, 12),-- Deep black section background
             ["Section Background 2"] = FromRGB(14, 14, 16),-- Alternate section, minimal difference
             ["Accent"] = FromRGB(0, 116, 224),           -- Darker blue accent for consistency
-            ["Element"] = FromRGB(16, 16, 18)            -- Deep gray for UI elements
+            ["Element"] = FromRGB(16, 16, 18),           -- Deep gray for UI elements
+            ["Menu Top"] = FromRGB(12, 12, 14),
+            ["Left Tabs"] = FromRGB(12, 12, 14),
+            ["Main Window"] = FromRGB(12, 12, 14)
         }
     }
 
@@ -428,7 +431,7 @@ local Library do
                 NewX = MathClamp(NewX, 0, ScreenSize.X - GuiSize.X)
                 NewY = MathClamp(NewY, 0, ScreenSize.Y - GuiSize.Y)
         
-                self:Tween(TweenInfo.new(0.35, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Position = UDim2New(0, NewX, 0, NewY)})
+                self:Tween(TweenInfo.new(0.35, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Position = UDim2FromOffset(NewX, NewY)})
             end
         
             local InputChanged
@@ -1278,7 +1281,8 @@ local Library do
                 
                 Instances:Create("UICorner", {
                     Parent = Items["PaletteDragger"].Instance,
-                    Name = "\0"
+                    Name = "\0",
+                    CornerRadius = UDimNew(1, 0)
                 })
                 
                 Items["Hue"] = Instances:Create("TextButton", {
@@ -1446,7 +1450,7 @@ local Library do
                     TextSize = 14,
                     BackgroundColor3 = FromRGB(30, 29, 31)
                 })  Items["HEXInput"]:AddToTheme({BackgroundColor3 = "Outline"})
-
+                
                 Instances:Create("UIPadding", {
                     Parent = Items["HEXInput"].Instance,
                     Name = "\0",
@@ -1886,6 +1890,7 @@ local Library do
                     BackgroundTransparency = 0.30000001192092896,
                     Position = UDim2New(0, 20, 0.5, 20),
                     Size = UDim2New(0, 100, 0, 30),
+                    ZIndex = 2,
                     BorderSizePixel = 0,
                     AutomaticSize = Enum.AutomaticSize.XY,
                     BackgroundColor3 = FromRGB(27, 25, 29)
@@ -2286,7 +2291,7 @@ local Library do
                     ZIndex = 2,
                     BorderSizePixel = 0,
                     BackgroundColor3 = FromRGB(27, 25, 29)
-                })  Items["MainFrame"]:AddToTheme({BackgroundColor3 = "Background"})
+                })  Items["MainFrame"]:AddToTheme({BackgroundColor3 = "Menu Top"})
 
                 if IsMobile then 
                     Instances:Create("UIScale", {
@@ -2310,7 +2315,7 @@ local Library do
                     ZIndex = 2,
                     BorderSizePixel = 0,
                     BackgroundColor3 = FromRGB(27, 25, 29)
-                })  Items["LeftTabs"]:AddToTheme({BackgroundColor3 = "Background"})
+                })  Items["LeftTabs"]:AddToTheme({BackgroundColor3 = "Left Tabs"})
 
                 Library:MakeBlurred(Items["LeftTabs"], Window)
 
@@ -2319,7 +2324,7 @@ local Library do
                 local Dragging = false 
                 local DragStart
                 local StartPosition 
-    
+        
                 local Set = function(Input)
                     local DragDelta = Input.Position - DragStart
                     Items["MainFrame"]:Tween(TweenInfo.new(0.16, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Position = UDim2New(StartPosition.X.Scale, StartPosition.X.Offset + DragDelta.X, StartPosition.Y.Scale, StartPosition.Y.Offset + DragDelta.Y)})
@@ -2379,7 +2384,7 @@ local Library do
                         ZIndex = 127,
                         BackgroundColor3 = Library.Theme.Background
                     })  Items["FloatingButton"]:AddToTheme({BackgroundColor3 = "Background"})
-
+                    
                     local Gui = Items["FloatingButton"].Instance
 
                     local Dragging = false 
@@ -2428,11 +2433,6 @@ local Library do
                         BackgroundColor3 = FromRGB(255, 255, 255)
                     })
         
-                    Instances:Create("UICorner", {
-                        Parent = Items["FloatingButton"].Instance,
-                        CornerRadius = UDimNew(1, 0)
-                    }) 
-
                     Instances:Create("UIGradient", {
                         Parent = Items["FloatingLogo"].Instance,
                         Name = "\0",
@@ -2482,12 +2482,12 @@ local Library do
                     Text = string.format("<b>%s</b>", Window.LeftTitle),
                     RichText = true,
                     AutomaticSize = Enum.AutomaticSize.X,
-                    Size = UDim2New(0, 0, 0, 18),
+                    Size = UDim2New(0, 0, 0, 22),
                     BorderSizePixel = 0,
                     BackgroundTransparency = 1,
                     TextXAlignment = Enum.TextXAlignment.Left,
                     ZIndex = 2,
-                    TextSize = 18,
+                    TextSize = 22,
                     LayoutOrder = -100,
                     BackgroundColor3 = FromRGB(255, 255, 255)
                 })  Items["LeftTitle"]:AddToTheme({TextColor3 = "Text"})
@@ -2562,7 +2562,7 @@ local Library do
                     ZIndex = 2,
                     BorderSizePixel = 0,
                     BackgroundColor3 = FromRGB(27, 25, 29)
-                })  Items["Content"]:AddToTheme({BackgroundColor3 = "Background"})
+                })  Items["Content"]:AddToTheme({BackgroundColor3 = "Main Window"})
 
                 Items["CloseButton"] = Instances:Create("TextButton", {
                     Parent = Items["MainFrame"].Instance,
@@ -2851,7 +2851,7 @@ local Library do
                     Size = UDim2New(0, 32, 0, 32),
                     ZIndex = 2,
                     TextSize = 14,
-                    BackgroundColor3 = FromRGB(27, 25, 29)
+                    BackgroundColor3 = FromRGB(27, 26, 29)
                 })  Items["SettingsButton"]:AddToTheme({BackgroundColor3 = "Element"})
                 
                 Instances:Create("UICorner", {
@@ -3137,11 +3137,6 @@ local Library do
                                 continue 
                             end
         
-                            if not Value.ClassName:find("UI") then 
-                                Value.ZIndex = Settings.IsOpen and 7 or 1
-                                SettingsItems["Text"].Instance.ZIndex = 8
-                            end
-        
                             if type(TransparencyProperty) == "table" then 
                                 for _, Property in TransparencyProperty do 
                                     NewTween = Tween:FadeItem(Value, Property, Bool, Library.FadeSpeed)
@@ -3188,6 +3183,33 @@ local Library do
                     Callback = function(Color)
                         Library.Theme.AccentGradient = Color
                         Library:ChangeTheme("AccentGradient", Color)
+                    end
+                })
+
+                Settings:Label("Menu top color"):Colorpicker({
+                    Flag = "MenuTopColor",
+                    Default = Library.Theme["Menu Top"],
+                    Callback = function(Color)
+                        Library.Theme["Menu Top"] = Color
+                        Library:ChangeTheme("Menu Top", Color)
+                    end
+                })
+
+                Settings:Label("Left tabs color"):Colorpicker({
+                    Flag = "LeftTabsColor",
+                    Default = Library.Theme["Left Tabs"],
+                    Callback = function(Color)
+                        Library.Theme["Left Tabs"] = Color
+                        Library:ChangeTheme("Left Tabs", Color)
+                    end
+                })
+
+                Settings:Label("Main window color"):Colorpicker({
+                    Flag = "MainWindowColor",
+                    Default = Library.Theme["Main Window"],
+                    Callback = function(Color)
+                        Library.Theme["Main Window"] = Color
+                        Library:ChangeTheme("Main Window", Color)
                     end
                 })
 
