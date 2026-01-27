@@ -2311,7 +2311,7 @@ local Library do
                     BorderColor3 = FromRGB(0, 0, 0),
                     AnchorPoint = Vector2New(1, 0),
                     BackgroundTransparency = 0.15,
-                    Size = UDim2New(0, 225, 1, 0),
+                    Size = UDim2New(0, 165, 1, 0),
                     ZIndex = 2,
                     BorderSizePixel = 0,
                     BackgroundColor3 = FromRGB(27, 25, 29)
@@ -2556,9 +2556,9 @@ local Library do
                     Parent = Items["MainFrame"].Instance,
                     Name = "\0",
                     BorderColor3 = FromRGB(0, 0, 0),
-                    BackgroundTransparency = 0.75,
-                    Position = UDim2New(0, 0, 0, 55),
-                    Size = UDim2New(1, 0, 1, -55),
+                    BackgroundTransparency = 0,
+                    Position = UDim2New(0, 0, 0, 99),
+                    Size = UDim2New(1, 0, 1, -99),
                     ZIndex = 2,
                     BorderSizePixel = 0,
                     BackgroundColor3 = FromRGB(27, 25, 29)
@@ -3352,7 +3352,7 @@ local Library do
                 elseif CurrentAlignment == "LeftTabs" or CurrentAlignment == "RightTabs" then
                     for Index, Value in Window.Pages do
                         Value.Items.Inactive.Instance.Parent = Items[CurrentAlignment].Instance
-                        Value.Items.Inactive.Instance.Size = UDim2New(0, 200, 0, 40)
+                        Value.Items.Inactive.Instance.Size = UDim2New(0, 141, 0, 40)
 
                         Value.Items.Text.Instance.Position = UDim2New(45, 0, 0.5, 0)
                         Value.Items.Text.Instance.AnchorPoint = Vector2New(0, 0.5)
@@ -3418,11 +3418,11 @@ local Library do
                         local TargetAnchorPoint
 
                         if SelectedParent == "LeftTabs" then
-                            TargetSize = UDim2New(0, 225, 1, 0)
+                            TargetSize = UDim2New(0, 165, 1, 0)
                             TargetPosition = UDim2New(0, 0, 0, 0)
                             TargetAnchorPoint = Vector2New(1, 0)
                         elseif SelectedParent == "RightTabs" then
-                            TargetSize = UDim2New(0, 225, 1, 0)
+                            TargetSize = UDim2New(0, 165, 1, 0)
                             TargetPosition = UDim2New(1, 0, 0, 0)
                             TargetAnchorPoint = Vector2New(0, 0)
                         elseif SelectedParent == "TopTabs" then
@@ -3516,7 +3516,7 @@ local Library do
                     AutoButtonColor = false,
                     BackgroundTransparency = 1,
                     BorderSizePixel = 0,
-                    Size = UDim2New(0, 200, 0, 40),
+                    Size = UDim2New(0, 141, 0, 40),
                     ZIndex = 2,
                     TextSize = 14,
                     BackgroundColor3 = FromRGB(124, 163, 255)
