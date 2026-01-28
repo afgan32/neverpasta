@@ -3193,10 +3193,13 @@ local Library do
                         end
                     end)
     
+                    Settings.Window = Window
+                    Settings.Page = Window.Pages and Window.Pages[1] or nil
+                    Settings.Section = Settings
                     Settings.Items = SettingsItems
                     setmetatable(Settings, Library.Sections)
                 end
-
+                
                 Settings:Label("First gradient color"):Colorpicker({
                     Flag = "AccentColor",
                     Default = Library.Theme.Accent,
