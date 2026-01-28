@@ -2312,7 +2312,6 @@ local Library do
                     BorderColor3 = FromRGB(0, 0, 0),
                     AnchorPoint = Vector2New(0.5, 0.5),
                     BackgroundTransparency = 0.12,
-                    ClipsDescendants = true,
                     Position = UDim2New(0.5519999861717224, 0, 0.5, 0),
                     Size = UDim2New(0, 677, 0, 644),
                     ZIndex = 2,
@@ -2584,7 +2583,6 @@ local Library do
                     Name = "\0",
                     BorderColor3 = FromRGB(0, 0, 0),
                     BackgroundTransparency = 0,
-                    ClipsDescendants = true,
                     Position = UDim2New(0, 0, 0, 99),
                     Size = UDim2New(1, 0, 1, -99),
                     ZIndex = 2,
@@ -3296,20 +3294,6 @@ local Library do
                         local LeftTabsCorner = Items["LeftTabs"].Instance:FindFirstChildOfClass("UICorner")
                         if LeftTabsCorner then
                             LeftTabsCorner.CornerRadius = Radius
-                        end
-
-                        if Items["LeftBottomPixels"] then
-                            local LeftBottomCorner = Items["LeftBottomPixels"].Instance:FindFirstChildOfClass("UICorner")
-                            if LeftBottomCorner then
-                                LeftBottomCorner.CornerRadius = Radius
-                            end
-                        end
-
-                        if Items["RightBottomPixels"] then
-                            local RightBottomCorner = Items["RightBottomPixels"].Instance:FindFirstChildOfClass("UICorner")
-                            if RightBottomCorner then
-                                RightBottomCorner.CornerRadius = Radius
-                            end
                         end
 
                         local SettingsCorner = SettingsItems["Settings"].Instance:FindFirstChildOfClass("UICorner")
