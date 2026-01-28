@@ -119,13 +119,16 @@ local Library do
         if not Library.ClickShield then
             return
         end
+        if not Library.ClickShield.Instance then
+            return
+        end
 
         local ShouldShow = Library:IsAnyFrameOpen()
 
         Library.ClickShield.Instance.Visible = ShouldShow
         if ShouldShow then
             Library.ClickShield.Instance.Parent = Library.Holder.Instance
-            Library.ClickShield.Instance.ZIndex = 1
+            Library.ClickShield.Instance.ZIndex = 99998
         else
             Library.ClickShield.Instance.Parent = Library.UnusedHolder.Instance
         end
