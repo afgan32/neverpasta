@@ -123,7 +123,12 @@ local Library do
         local ShouldShow = Library:IsAnyFrameOpen()
 
         Library.ClickShield.Instance.Visible = ShouldShow
-        Library.ClickShield.Instance.Parent = ShouldShow and Library.Holder.Instance or Library.UnusedHolder.Instance
+        if ShouldShow then
+            Library.ClickShield.Instance.Parent = Library.Holder.Instance
+            Library.ClickShield.Instance.ZIndex = 1
+        else
+            Library.ClickShield.Instance.Parent = Library.UnusedHolder.Instance
+        end
     end
 
     Library.__index = Library
