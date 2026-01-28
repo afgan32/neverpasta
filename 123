@@ -2276,12 +2276,12 @@ local Library do
                 Pages = { },
                 Items = { },
                 IsOpen = false,
-                CurrentAlignment = "LeftTabs"
+                CurrentAlignment = "LeftTabs",
+                TopBarSize = 99,
+                LeftTabsWidth = 165,
+                LeftTabButtonWidth = 141,
+                LeftTabButtonHeight = 40
             }
-
-            Library.Flags["BackgroundTransparency"] = Library.Flags["BackgroundTransparency"] or 0.12
-            Library.Flags["TopBarHeight"] = Library.Flags["TopBarHeight"] or 80
-            Library.Flags["LeftTabsWidth"] = Library.Flags["LeftTabsWidth"] or 165
 
             local Items = { } do
                 Items["MainFrame"] = Instances:Create("Frame", {
@@ -2289,13 +2289,13 @@ local Library do
                     Name = "\0",
                     BorderColor3 = FromRGB(0, 0, 0),
                     AnchorPoint = Vector2New(0.5, 0.5),
-                    BackgroundTransparency = Library.Flags["BackgroundTransparency"],
+                    BackgroundTransparency = 0.12,
                     Position = UDim2New(0.5519999861717224, 0, 0.5, 0),
                     Size = UDim2New(0, 677, 0, 644),
                     ZIndex = 2,
                     BorderSizePixel = 0,
                     BackgroundColor3 = FromRGB(27, 25, 29)
-                })  Items["MainFrame"]:AddToTheme({BackgroundColor3 = "Main Window"})
+                })  Items["MainFrame"]:AddToTheme({BackgroundColor3 = "Menu Top"})
 
                 if IsMobile then 
                     Instances:Create("UIScale", {
@@ -2307,18 +2307,6 @@ local Library do
 
                 Items["MainFrame"]:MakeResizeable(Vector2New(Items["MainFrame"].Instance.AbsoluteSize.X, Items["MainFrame"].Instance.AbsoluteSize.Y), Vector2New(9999, 9999), OriginalSizes)
                 Library:MakeBlurred(Items["MainFrame"], Window)
-
-                Items["TopBar"] = Instances:Create("Frame", {
-                    Parent = Items["MainFrame"].Instance,
-                    Name = "\0",
-                    BorderColor3 = FromRGB(0, 0, 0),
-                    BackgroundTransparency = Library.Flags["BackgroundTransparency"],
-                    Position = UDim2New(0, 0, 0, 0),
-                    Size = UDim2New(1, 0, 0, Library.Flags["TopBarHeight"]),
-                    ZIndex = 2,
-                    BorderSizePixel = 0,
-                    BackgroundColor3 = FromRGB(27, 25, 29)
-                })  Items["TopBar"]:AddToTheme({BackgroundColor3 = "Menu Top"})
                 
                 Items["LeftTabs"] = Instances:Create("Frame", {
                     Parent = Items["MainFrame"].Instance,
@@ -2326,13 +2314,13 @@ local Library do
                     Visible = true,
                     BorderColor3 = FromRGB(0, 0, 0),
                     AnchorPoint = Vector2New(1, 0),
-                    BackgroundTransparency = Library.Flags["BackgroundTransparency"],
-                    Size = UDim2New(0, Library.Flags["LeftTabsWidth"], 1, 0),
+                    BackgroundTransparency = 0.15,
+                    Size = UDim2New(0, Window.LeftTabsWidth, 1, 0),
                     ZIndex = 2,
                     BorderSizePixel = 0,
                     BackgroundColor3 = FromRGB(27, 25, 29)
                 })  Items["LeftTabs"]:AddToTheme({BackgroundColor3 = "Left Tabs"})
-                
+
                 Library:MakeBlurred(Items["LeftTabs"], Window)
 
                 local Gui = Items["MainFrame"].Instance
@@ -2572,14 +2560,14 @@ local Library do
                     Parent = Items["MainFrame"].Instance,
                     Name = "\0",
                     BorderColor3 = FromRGB(0, 0, 0),
-                    BackgroundTransparency = Library.Flags["BackgroundTransparency"],
-                    Position = UDim2New(0, 0, 0, Library.Flags["TopBarHeight"]),
-                    Size = UDim2New(1, 0, 1, -Library.Flags["TopBarHeight"]),
+                    BackgroundTransparency = 0,
+                    Position = UDim2New(0, 0, 0, Window.TopBarSize),
+                    Size = UDim2New(1, 0, 1, -Window.TopBarSize),
                     ZIndex = 2,
                     BorderSizePixel = 0,
                     BackgroundColor3 = FromRGB(27, 25, 29)
                 })  Items["Content"]:AddToTheme({BackgroundColor3 = "Main Window"})
-                
+
                 Items["CloseButton"] = Instances:Create("TextButton", {
                     Parent = Items["MainFrame"].Instance,
                     Name = "\0",
@@ -2832,8 +2820,6 @@ local Library do
                 function Window:SetTransparency()
                     Items["MainFrame"].Instance.BackgroundTransparency = Library.Flags["BackgroundTransparency"] 
                     Items["LeftTabs"].Instance.BackgroundTransparency = Library.Flags["BackgroundTransparency"]  
-                    Items["Content"].Instance.BackgroundTransparency = Library.Flags["BackgroundTransparency"]
-                    Items["TopBar"].Instance.BackgroundTransparency = Library.Flags["BackgroundTransparency"]
                     if IsMobile then
                         Items["FloatingButton"].Instance.BackgroundTransparency = Library.Flags["BackgroundTransparency"]  
                     end
@@ -3231,6 +3217,40 @@ local Library do
                     end
                 })
 
+                Settings:Slider({
+                    Name = "Top tab size",
+                    Default = Window.TopBarSize,
+                    Decimals = 0,
+                    Max = 180,
+                    Min = 60,
+                    Suffix = "px",
+                    Flag = "TopTabSize",
+                    Callback = function(Value)
+                        Window.TopBarSize = Value
+                        Items["Content"].Instance.Position = UDim2New(0, 0, 0, Window.TopBarSize)
+                        Items["Content"].Instance.Size = UDim2New(1, 0, 1, -Window.TopBarSize)
+                    end
+                })
+
+                Settings:Slider({
+                    Name = "Left tab size",
+                    Default = Window.LeftTabsWidth,
+                    Decimals = 0,
+                    Max = 240,
+                    Min = 120,
+                    Suffix = "px",
+                    Flag = "LeftTabSize",
+                    Callback = function(Value)
+                        Window.LeftTabsWidth = Value
+                        Window.LeftTabButtonWidth = math.max(0, Window.LeftTabsWidth - 24)
+                        Items["LeftTabs"].Instance.Size = UDim2New(0, Window.LeftTabsWidth, 1, 0)
+
+                        for _, Page in Window.Pages do
+                            Page.Items.Inactive.Instance.Size = UDim2New(0, Window.LeftTabButtonWidth, 0, Window.LeftTabButtonHeight)
+                        end
+                    end
+                })
+
                 Settings:Dropdown({
                     Name = "Font weight",
                     Flag = "FontStyle",
@@ -3259,35 +3279,6 @@ local Library do
                     end
                 })
 
-                Settings:Slider({
-                    Name = "Top Bar Height",
-                    Default = 80,
-                    Decimals = 1,
-                    Max = 140,
-                    Min = 55,
-                    Suffix = "px",
-                    Flag = "TopBarHeight",
-                    Callback = function()
-                        Items["TopBar"].Instance.Size = UDim2New(1, 0, 0, Library.Flags["TopBarHeight"])
-                        Items["Content"].Instance.Position = UDim2New(0, 0, 0, Library.Flags["TopBarHeight"])
-                        Items["Content"].Instance.Size = UDim2New(1, 0, 1, -Library.Flags["TopBarHeight"])
-                    end
-                })
-
-                Settings:Slider({
-                    Name = "Left Tabs Width",
-                    Default = 165,
-                    Decimals = 1,
-                    Max = 260,
-                    Min = 120,
-                    Suffix = "px",
-                    Flag = "LeftTabsWidth",
-                    Callback = function()
-                        Items["LeftTabs"].Instance.Size = UDim2New(0, Library.Flags["LeftTabsWidth"], 1, 0)
-                        Window:UpdateTabs(Window.CurrentAlignment)
-                    end
-                })
-                
                 Settings:Keybind({
                     Name = "Menu Keybind",
                     Flag = "MenuBind",
@@ -3358,6 +3349,24 @@ local Library do
                 end)
             end
 
+            --[[
+            function Window:GetClosestFrame(Position, Instances)
+                local ClosestRadius = math.huge
+                local ClosestFrame
+
+                local String = {"Items.LeftTabs", "Items.RightTabs", "Items.BottomTabs", "Items.TopTabs"}
+
+                for Index, Value in (Instances or {Items.LeftTabs.Instance, Items.RightTabs.Instance, Items.BottomTabs.Instance, Items.TopTabs.Instance}) do
+                    local Magnitude = (Vector2New(Value.AbsolutePosition.X, Value.AbsolutePosition.Y) - Position).Magnitude
+                    if Magnitude < ClosestRadius then
+                        ClosestFrame = String[Index]:gsub("Items.", "")
+                        ClosestRadius = Magnitude
+                    end
+                end 
+
+                return ClosestFrame
+            end 
+
             function Window:UpdateTabs(CurrentAlignment)
                 if CurrentAlignment == "TopTabs" or CurrentAlignment == "BottomTabs" then
                     for Index, Value in Window.Pages do 
@@ -3379,10 +3388,9 @@ local Library do
                         end
                     end
                 elseif CurrentAlignment == "LeftTabs" or CurrentAlignment == "RightTabs" then
-                    local TabButtonWidth = MathClamp((Library.Flags["LeftTabsWidth"] or 165) - 24, 60, 1000)
                     for Index, Value in Window.Pages do
                         Value.Items.Inactive.Instance.Parent = Items[CurrentAlignment].Instance
-                        Value.Items.Inactive.Instance.Size = UDim2New(0, TabButtonWidth, 0, 40)
+                        Value.Items.Inactive.Instance.Size = UDim2New(0, Window.LeftTabButtonWidth, 0, Window.LeftTabButtonHeight)
 
                         Value.Items.Text.Instance.Position = UDim2New(45, 0, 0.5, 0)
                         Value.Items.Text.Instance.AnchorPoint = Vector2New(0, 0.5)
@@ -3448,11 +3456,11 @@ local Library do
                         local TargetAnchorPoint
 
                         if SelectedParent == "LeftTabs" then
-                            TargetSize = UDim2New(0, Library.Flags["LeftTabsWidth"] or 165, 1, 0)
+                            TargetSize = UDim2New(0, 165, 1, 0)
                             TargetPosition = UDim2New(0, 0, 0, 0)
                             TargetAnchorPoint = Vector2New(1, 0)
                         elseif SelectedParent == "RightTabs" then
-                            TargetSize = UDim2New(0, Library.Flags["LeftTabsWidth"] or 165, 1, 0)
+                            TargetSize = UDim2New(0, 165, 1, 0)
                             TargetPosition = UDim2New(1, 0, 0, 0)
                             TargetAnchorPoint = Vector2New(0, 0)
                         elseif SelectedParent == "TopTabs" then
@@ -3471,6 +3479,20 @@ local Library do
                     end
                 end)
             end
+            --]]
+
+            function Window:Init()
+                for __, Value in Window.Pages do 
+                    if Value.Active then 
+                        for _, Value2 in Value.Sections do 
+                            task.spawn(function()
+                                Value2:TweenElements(true)
+                            end)
+                        end
+                    end
+                end
+            end
+
             --[[Library:Connect(UserInputService.InputBegan, function(Input)
                 if tostring(Input.KeyCode) == Library.MenuKeybind or tostring(Input.UserInputType) == Library.MenuKeybind then
                     Window:SetOpen(not Window.IsOpen)
@@ -3522,7 +3544,6 @@ local Library do
             }
 
             local Items = { } do
-                local TabButtonWidth = MathClamp((Library.Flags["LeftTabsWidth"] or 165) - 24, 60, 1000)
                 Items["Inactive"] = Instances:Create("TextButton", {
                     Parent = Page.Window.Items["LeftTabs"].Instance,
                     Name = "\0",
@@ -3533,7 +3554,7 @@ local Library do
                     AutoButtonColor = false,
                     BackgroundTransparency = 1,
                     BorderSizePixel = 0,
-                    Size = UDim2New(0, TabButtonWidth, 0, 40),
+                    Size = UDim2New(0, Page.Window.LeftTabButtonWidth, 0, Page.Window.LeftTabButtonHeight),
                     ZIndex = 2,
                     TextSize = 14,
                     BackgroundColor3 = FromRGB(124, 163, 255)
