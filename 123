@@ -5085,9 +5085,10 @@ local Library do
                         SettingsItem["Settings"].Instance.Parent = Library.Holder.Instance
                         
                         RenderStepped = RunService.RenderStepped:Connect(function()
+                            local Anchor = Items["SettingsIcon"] or Items["Indicator"]
                             SettingsItem["Settings"].Instance.Position = UDim2New(
-                                0, Items["Toggle"].Instance.AbsolutePosition.X + Items["Toggle"].Instance.AbsoluteSize.X / 1.9 + 15, 
-                                0, Items["Toggle"].Instance.AbsolutePosition.Y + Items["Toggle"].Instance.AbsoluteSize.Y + Size / 1.9)
+                                0, Anchor.Instance.AbsolutePosition.X + Anchor.Instance.AbsoluteSize.X,
+                                0, Anchor.Instance.AbsolutePosition.Y + Anchor.Instance.AbsoluteSize.Y + (Size / 8))
                             SettingsItem["Settings"].Instance.Size = UDim2New(0, 245, 0, Size)
                         end)
     
@@ -5232,11 +5233,15 @@ local Library do
 
             function Toggle:RefreshPosition(Bool)
                 if Bool then 
-                    Items["Indicator"]:Tween(TweenInfo.new(1, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Position = UDim2New(0, 0, 0, 0)})
-                    Items["Text"]:Tween(TweenInfo.new(1, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Position = UDim2New(0, 24, 0, 0)})
+                    Items["Indicator"]:Tween(TweenInfo.new(1, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {
+                        AnchorPoint = Vector2New(1, 0.5),
+                        Position = UDim2New(1, -12, 0.5, 0)
+                    })
+                    Items["Text"]:Tween(TweenInfo.new(1, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Position = UDim2New(0, 16, 0, 0)})
                 else
-                    Items["Indicator"].Instance.Position = UDim2New(0, 60, 0, 0)
-                    Items["Text"].Instance.Position = UDim2New(0, 84, 0, 0)
+                    Items["Indicator"].Instance.AnchorPoint = Vector2New(1, 0.5)
+                    Items["Indicator"].Instance.Position = UDim2New(1, -12, 0.5, 0)
+                    Items["Text"].Instance.Position = UDim2New(0, 16, 0, 0)
                 end 
             end
 
