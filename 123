@@ -738,15 +738,30 @@ local Library do
         ZIndex = 100
     })
 
-    if Library.ClickShield.Instance and Library.ClickShield.Instance.Instance then
-        Library.ClickShield.Instance.Instance.MouseButton1Down:Connect(function()
-            for _, FrameObj in Library.OpenFrames do
-                if FrameObj and FrameObj.SetOpen then
-                    FrameObj:SetOpen(false)
-                end
+    Library:Connect(UserInputService.InputBegan, function(Input)
+        if Input.UserInputType ~= Enum.UserInputType.MouseButton1 and Input.UserInputType ~= Enum.UserInputType.Touch then
+            return
+        end
+
+        if not Library.ClickShield or not Library.ClickShield.Instance or not Library.ClickShield.Instance.Instance then
+            return
+        end
+
+        local Shield = Library.ClickShield.Instance.Instance
+        if not Shield.Visible then
+            return
+        end
+
+        if not Library:IsMouseOverFrame(Library.ClickShield.Instance) then
+            return
+        end
+
+        for _, FrameObj in Library.OpenFrames do
+            if FrameObj and FrameObj.SetOpen then
+                FrameObj:SetOpen(false)
             end
-        end)
-    end
+        end
+    end)
 
     Library.NotifHolder = Instances:Create("Frame", {
         Parent = Library.Holder.Instance,
@@ -839,9 +854,7 @@ local Library do
             Connection = nil
         }
 
-        Library:Thread(function()
-            NewConnection.Connection = Event:Connect(Callback)
-        end)
+        NewConnection.Connection = Event:Connect(Callback)
 
         TableInsert(self.Connections, NewConnection)
         return NewConnection
