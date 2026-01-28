@@ -3228,10 +3228,10 @@ local Library do
 
                 Settings:Slider({
                     Name = "Top tab size",
-                    Default = 178.2,
+                    Default = 65,
                     Decimals = 1,
-                    Max = 300,
-                    Min = 99,
+                    Max = 65,
+                    Min = 10,
                     Suffix = "px",
                     Flag = "TopTabSize",
                     Callback = function(Value)
