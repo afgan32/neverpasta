@@ -3235,9 +3235,8 @@ local Library do
                     Suffix = "px",
                     Flag = "TopTabSize",
                     Callback = function(Value)
-                        if Items["TopTabs"] then
-                            Items["TopTabs"].Instance.Size = UDim2New(1, 0, 0, Value)
-                        end
+                        Items["Content"].Instance.Position = UDim2New(0, 0, 0, Value + 19)
+                        Items["Content"].Instance.Size = UDim2New(1, 0, 1, -(Value + 19))
                     end
                 })
 
