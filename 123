@@ -3276,8 +3276,36 @@ local Library do
                 })
 
                 Settings:Slider({
+                    Name = "Menu corner radius",
+                    Default = 4,
+                    Decimals = 1,
+                    Max = 20,
+                    Min = 0,
+                    Suffix = "px",
+                    Flag = "MenuCornerRadius",
+                    Callback = function(Value)
+                        local Radius = UDimNew(0, Value)
+
+                        local MainCorner = Items["MainFrame"].Instance:FindFirstChildOfClass("UICorner")
+                        if MainCorner then
+                            MainCorner.CornerRadius = Radius
+                        end
+
+                        local LeftTabsCorner = Items["LeftTabs"].Instance:FindFirstChildOfClass("UICorner")
+                        if LeftTabsCorner then
+                            LeftTabsCorner.CornerRadius = Radius
+                        end
+
+                        local SettingsCorner = SettingsItems["Settings"].Instance:FindFirstChildOfClass("UICorner")
+                        if SettingsCorner then
+                            SettingsCorner.CornerRadius = Radius
+                        end
+                    end
+                })
+
+                Settings:Slider({
                     Name = "Top tab size",
-                    Default = 65,
+                    Default = 48,
                     Decimals = 1,
                     Max = 65,
                     Min = 10,
