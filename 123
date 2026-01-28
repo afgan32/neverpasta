@@ -5113,6 +5113,11 @@ local Library do
                         
                         RenderStepped = RunService.RenderStepped:Connect(function()
                             local Anchor = Items["SettingsIcon"] or Items["Indicator"]
+                            local ClipParent = Toggle.Section.Items["Section"].Instance.Parent
+                            if Library:IsClipped(Items["Toggle"].Instance, ClipParent) then
+                                Settings:SetOpen(false)
+                                return
+                            end
                             SettingsItem["Settings"].Instance.Position = UDim2New(
                                 0, Anchor.Instance.AbsolutePosition.X + Anchor.Instance.AbsoluteSize.X,
                                 0, Anchor.Instance.AbsolutePosition.Y + Anchor.Instance.AbsoluteSize.Y + (Size / 8))
