@@ -4868,7 +4868,7 @@ local Library do
                     Text = Toggle.Name,
                     AutomaticSize = Enum.AutomaticSize.X,
                     Size = UDim2New(0, 0, 0, 15),
-                    Position = UDim2New(0, 16, 0, 0),
+                    Position = UDim2New(0, 4, 0, 0),
                     BorderSizePixel = 0,
                     BackgroundTransparency = 1,
                     TextXAlignment = Enum.TextXAlignment.Left,
@@ -4899,7 +4899,7 @@ local Library do
 
             Items["Indicator"].Instance.Position = UDim2New(1, -12, 0.5, 0)
             Items["Indicator"].Instance.AnchorPoint = Vector2New(1, 0.5)
-            Items["Text"].Instance.Position = UDim2New(0, 16, 0, 0)
+            Items["Text"].Instance.Position = UDim2New(0, 4, 0, 0)
 
             --Toggle.Section.Items["Fade"].Instance.Size = UDim2New(1, 0, 0, Toggle.Section.Items["Content"].Instance.AbsoluteSize.X - 180)
 
@@ -5263,11 +5263,11 @@ local Library do
                         AnchorPoint = Vector2New(1, 0.5),
                         Position = UDim2New(1, -12, 0.5, 0)
                     })
-                    Items["Text"]:Tween(TweenInfo.new(1, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Position = UDim2New(0, 16, 0, 0)})
+                    Items["Text"]:Tween(TweenInfo.new(1, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Position = UDim2New(0, 4, 0, 0)})
                 else
                     Items["Indicator"].Instance.AnchorPoint = Vector2New(1, 0.5)
                     Items["Indicator"].Instance.Position = UDim2New(1, -12, 0.5, 0)
-                    Items["Text"].Instance.Position = UDim2New(0, 16, 0, 0)
+                    Items["Text"].Instance.Position = UDim2New(0, 4, 0, 0)
                 end 
             end
 
