@@ -751,6 +751,21 @@ local Library do
         PaddingLeft = UDimNew(0, 12)
     })    
 
+    Library.ClickShield.Instance = Instances:Create("TextButton", {
+        Parent = Library.UnusedHolder.Instance,
+        Name = "\0",
+        AutoButtonColor = false,
+        Text = "",
+        BackgroundTransparency = 1,
+        BorderSizePixel = 0,
+        Size = UDim2New(1, 0, 1, 0),
+        Position = UDim2New(0, 0, 0, 0),
+        Visible = false,
+        ZIndex = 99997,
+        Modal = true,
+        BackgroundColor3 = FromRGB(0, 0, 0)
+    })
+
     Library.Unload = function(self)
         for Index, Value in self.Connections do 
             Value.Connection:Disconnect()
@@ -4951,7 +4966,7 @@ local Library do
                         BorderSizePixel = 0,
                         Position = UDim2New(0.8949604630470276, 0, 0.2945185601711273, 0),
                         Size = UDim2New(0, 245, 0, 159),
-                        ZIndex = 2,
+                        ZIndex = 99999,
                         AutomaticSize = Enum.AutomaticSize.Y,
                         BackgroundColor3 = FromRGB(21, 21, 24)
                     })  SettingsItem["Settings"]:AddToTheme({BackgroundColor3 = "Background"})
@@ -5110,6 +5125,7 @@ local Library do
 
                         SettingsItem["Settings"].Instance.Visible = true
                         SettingsItem["Settings"].Instance.Parent = Library.Holder.Instance
+                        Library:UpdateClickShield()
                         
                         RenderStepped = RunService.RenderStepped:Connect(function()
                             local Anchor = Items["SettingsIcon"] or Items["Indicator"]
@@ -5144,6 +5160,7 @@ local Library do
                             RenderStepped:Disconnect()
                             RenderStepped = nil
                         end
+                        Library:UpdateClickShield()
                     end
     
                     local Descendants = SettingsItem["Settings"].Instance:GetDescendants()
