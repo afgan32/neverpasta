@@ -2814,15 +2814,38 @@ local Library do
                 end
 
                 function Window:SetTransparency()
-                    Items["MainFrame"].Instance.BackgroundTransparency = Library.Flags["BackgroundTransparency"] 
-                    Items["LeftTabs"].Instance.BackgroundTransparency = Library.Flags["BackgroundTransparency"]  
-                    if IsMobile then
-                        Items["FloatingButton"].Instance.BackgroundTransparency = Library.Flags["BackgroundTransparency"]  
+                    local MainTransparency = Library.Flags["MainWindowTransparency"]
+                    local LeftTransparency = Library.Flags["LeftTabsTransparency"]
+                    local ContentTransparency = Library.Flags["ContentTransparency"]
+
+                    if MainTransparency == nil or LeftTransparency == nil or ContentTransparency == nil then
+                        local Legacy = Library.Flags["BackgroundTransparency"]
+                        if Legacy ~= nil then
+                            MainTransparency = MainTransparency == nil and Legacy or MainTransparency
+                            LeftTransparency = LeftTransparency == nil and Legacy or LeftTransparency
+                            ContentTransparency = ContentTransparency == nil and Legacy or ContentTransparency
+                        end
                     end
 
-                    for _, Value in Items do 
-                        if _:find("___") then
-                            Value.Instance.BackgroundTransparency = tonumber(Library.Flags["BackgroundTransparency"])
+                    if MainTransparency ~= nil and Items["MainFrame"] then
+                        Items["MainFrame"].Instance.BackgroundTransparency = tonumber(MainTransparency)
+                    end
+
+                    if LeftTransparency ~= nil and Items["LeftTabs"] then
+                        Items["LeftTabs"].Instance.BackgroundTransparency = tonumber(LeftTransparency)
+                    end
+
+                    if ContentTransparency ~= nil and Items["Content"] then
+                        Items["Content"].Instance.BackgroundTransparency = tonumber(ContentTransparency)
+                    end
+
+                    if IsMobile and Items["FloatingButton"] and LeftTransparency ~= nil then
+                        Items["FloatingButton"].Instance.BackgroundTransparency = tonumber(LeftTransparency)
+                    end
+
+                    for Key, Value in Items do 
+                        if type(Key) == "string" and Key:find("___") and Value and Value.Instance then
+                            Value.Instance.BackgroundTransparency = tonumber(LeftTransparency or MainTransparency or ContentTransparency or 0)
                         end
                     end
                 end
@@ -3256,15 +3279,41 @@ local Library do
                 })
 
                 Settings:Slider({
-                    Name = "Background Transparency",
+                    Name = "Main window transparency",
                     Default = 0.12,
                     Decimals = 0.01,
                     Max = 1,
                     Min = 0,
                     Suffix = "%",
-                    Flag = "BackgroundTransparency",
+                    Flag = "MainWindowTransparency",
                     Callback = function(Value)
-                        Window:SetTransparency(Value)
+                        Window:SetTransparency()
+                    end
+                })
+
+                Settings:Slider({
+                    Name = "Left tab transparency",
+                    Default = 0.12,
+                    Decimals = 0.01,
+                    Max = 1,
+                    Min = 0,
+                    Suffix = "%",
+                    Flag = "LeftTabsTransparency",
+                    Callback = function(Value)
+                        Window:SetTransparency()
+                    end
+                })
+
+                Settings:Slider({
+                    Name = "Content transparency",
+                    Default = 0.12,
+                    Decimals = 0.01,
+                    Max = 1,
+                    Min = 0,
+                    Suffix = "%",
+                    Flag = "ContentTransparency",
+                    Callback = function(Value)
+                        Window:SetTransparency()
                     end
                 })
 
