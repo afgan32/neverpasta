@@ -724,17 +724,38 @@ local Library do
         ResetOnSpawn = false
     })
 
-    Library.NotifHolder  = Instances:Create("Frame", {
+    Library.ClickShield.Instance = Instances:Create("TextButton", {
+        Parent = Library.UnusedHolder.Instance,
+        Name = "\0",
+        BackgroundTransparency = 1,
+        BorderSizePixel = 0,
+        Text = "",
+        AutoButtonColor = false,
+        Active = true,
+        Visible = false,
+        Size = UDim2New(1, 0, 1, 0),
+        Position = UDim2New(0, 0, 0, 0),
+        ZIndex = 100
+    })
+
+    Library:Connect(Library.ClickShield.Instance.MouseButton1Down, function()
+        for _, FrameObj in Library.OpenFrames do
+            if FrameObj and FrameObj.SetOpen then
+                FrameObj:SetOpen(false)
+            end
+        end
+    end)
+
+    Library.NotifHolder = Instances:Create("Frame", {
         Parent = Library.Holder.Instance,
         Name = "\0",
         BackgroundTransparency = 1,
-        Size = UDim2New(0, 0, 1, 0),
-        BorderColor3 = FromRGB(0, 0, 0),
         BorderSizePixel = 0,
-        AutomaticSize = Enum.AutomaticSize.X,
-        BackgroundColor3 = FromRGB(255, 255, 255)
+        Size = UDim2New(0, 0, 0, 0),
+        Position = UDim2New(0, 0, 0, 0),
+        ZIndex = 2
     })
-    
+
     Instances:Create("UIListLayout", {
         Parent = Library.NotifHolder.Instance,
         Name = "\0",
@@ -2999,7 +3020,7 @@ local Library do
                         BorderSizePixel = 0,
                         Position = UDim2New(0.8949604630470276, 0, 0.2945185601711273, 0),
                         Size = UDim2New(0, 245, 0, 159),
-                        ZIndex = 2,
+                        ZIndex = 10,
                         AutomaticSize = Enum.AutomaticSize.Y,
                         BackgroundColor3 = FromRGB(21, 21, 24)
                     }) SettingsItems["Settings"]:AddToTheme({BackgroundColor3 = "Section Background 2"})
@@ -4950,7 +4971,7 @@ local Library do
                         BorderSizePixel = 0,
                         Position = UDim2New(0.8949604630470276, 0, 0.2945185601711273, 0),
                         Size = UDim2New(0, 245, 0, 159),
-                        ZIndex = 2,
+                        ZIndex = 10,
                         AutomaticSize = Enum.AutomaticSize.Y,
                         BackgroundColor3 = FromRGB(21, 21, 24)
                     })  SettingsItem["Settings"]:AddToTheme({BackgroundColor3 = "Background"})
@@ -4962,15 +4983,15 @@ local Library do
                     })                    
 
                     SettingsItem["SettingsIcon"] = Instances:Create("ImageLabel", {
-                        Parent = Items["Text"].Instance,
+                        Parent = Items["Toggle"].Instance,
                         Name = "\0",
                         ImageColor3 = FromRGB(141, 141, 150),
                         BorderColor3 = FromRGB(0, 0, 0),
                         Size = UDim2New(0, 14, 0, 14),
-                        AnchorPoint = Vector2New(0, 0.5),
+                        AnchorPoint = Vector2New(1, 0.5),
                         Image = "rbxassetid://101500482366184",
                         BackgroundTransparency = 1,
-                        Position = UDim2New(1, 6, 0.5, 0),
+                        Position = UDim2New(1, -48, 0.5, 0),
                         ZIndex = 2,
                         BorderSizePixel = 0,
                         BackgroundColor3 = FromRGB(255, 255, 255)
@@ -5125,6 +5146,7 @@ local Library do
                         end
     
                         Library.OpenFrames[Settings] = Settings 
+                        Library:UpdateClickShield()
                     else
                         for Index, Value in Settings.Elements do
                             Value:RefreshPosition(false)
@@ -5133,6 +5155,8 @@ local Library do
                         if Library.OpenFrames[Settings] then 
                             Library.OpenFrames[Settings] = nil
                         end
+    
+                        Library:UpdateClickShield()
     
                         if RenderStepped then 
                             RenderStepped:Disconnect()
