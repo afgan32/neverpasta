@@ -98,13 +98,39 @@ local Library do
         NotifHolder = nil,
         UnusedHolder = nil,
 
-        Font = nil
+        Font = nil,
+
+        ClickShield = {
+            Instance = nil,
+            Visible = false
+        }
     }
+
+    function Library:IsAnyFrameOpen()
+        for _, FrameObj in Library.OpenFrames do
+            if FrameObj and FrameObj.IsOpen then
+                return true
+            end
+        end
+        return false
+    end
+
+    function Library:UpdateClickShield()
+        if not Library.ClickShield then
+            return
+        end
+
+        local ShouldShow = Library:IsAnyFrameOpen()
+
+        Library.ClickShield.Instance.Visible = ShouldShow
+        Library.ClickShield.Instance.Parent = ShouldShow and Library.Holder.Instance or Library.UnusedHolder.Instance
+    end
 
     Library.__index = Library
     Library.Sections.__index = Library.Sections
     Library.Pages.__index = Library.Pages
 
+    -- ... (rest of the code remains the same)
     local Keys = {
         ["Unknown"]           = "Unknown",
         ["Backspace"]         = "Back",
@@ -4842,7 +4868,8 @@ local Library do
                     Text = Toggle.Name,
                     AutomaticSize = Enum.AutomaticSize.X,
                     Size = UDim2New(0, 0, 0, 15),
-                    Position = UDim2New(0, 16, 0, 0),
+                    AnchorPoint = Vector2New(0, 0.5),
+                    Position = UDim2New(0, 2, 0.5, 0),
                     BorderSizePixel = 0,
                     BackgroundTransparency = 1,
                     TextXAlignment = Enum.TextXAlignment.Left,
@@ -4873,7 +4900,7 @@ local Library do
 
             Items["Indicator"].Instance.Position = UDim2New(1, -12, 0.5, 0)
             Items["Indicator"].Instance.AnchorPoint = Vector2New(1, 0.5)
-            Items["Text"].Instance.Position = UDim2New(0, 16, 0, 0)
+            Items["Text"].Instance.Position = UDim2New(0, 2, 0.5, 0)
 
             --Toggle.Section.Items["Fade"].Instance.Size = UDim2New(1, 0, 0, Toggle.Section.Items["Content"].Instance.AbsoluteSize.X - 180)
 
@@ -4936,15 +4963,15 @@ local Library do
                     })                    
 
                     SettingsItem["SettingsIcon"] = Instances:Create("ImageLabel", {
-                        Parent = Items["Text"].Instance,
+                        Parent = Items["Toggle"].Instance,
                         Name = "\0",
                         ImageColor3 = FromRGB(141, 141, 150),
                         BorderColor3 = FromRGB(0, 0, 0),
                         Size = UDim2New(0, 14, 0, 14),
-                        AnchorPoint = Vector2New(0, 0.5),
+                        AnchorPoint = Vector2New(1, 0.5),
                         Image = "rbxassetid://101500482366184",
                         BackgroundTransparency = 1,
-                        Position = UDim2New(1, 6, 0.5, 0),
+                        Position = UDim2New(1, -54, 0.5, 0),
                         ZIndex = 2,
                         BorderSizePixel = 0,
                         BackgroundColor3 = FromRGB(255, 255, 255)
@@ -5126,10 +5153,6 @@ local Library do
                             continue 
                         end
     
-                        if not Value.ClassName:find("UI") then 
-                            Value.ZIndex = Settings.IsOpen and 7 or 1
-                        end
-    
                         if type(TransparencyProperty) == "table" then 
                             for _, Property in TransparencyProperty do 
                                 NewTween = Tween:FadeItem(Value, Property, Bool, Library.FadeSpeed)
@@ -5237,11 +5260,11 @@ local Library do
                         AnchorPoint = Vector2New(1, 0.5),
                         Position = UDim2New(1, -12, 0.5, 0)
                     })
-                    Items["Text"]:Tween(TweenInfo.new(1, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Position = UDim2New(0, 16, 0, 0)})
+                    Items["Text"]:Tween(TweenInfo.new(1, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Position = UDim2New(0, 2, 0.5, 0)})
                 else
                     Items["Indicator"].Instance.AnchorPoint = Vector2New(1, 0.5)
                     Items["Indicator"].Instance.Position = UDim2New(1, -12, 0.5, 0)
-                    Items["Text"].Instance.Position = UDim2New(0, 16, 0, 0)
+                    Items["Text"].Instance.Position = UDim2New(0, 2, 0.5, 0)
                 end 
             end
 
