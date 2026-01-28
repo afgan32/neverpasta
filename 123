@@ -2973,7 +2973,7 @@ local Library do
                         BorderSizePixel = 0,
                         Position = UDim2New(0.8949604630470276, 0, 0.2945185601711273, 0),
                         Size = UDim2New(0, 245, 0, 159),
-                        ZIndex = 20,
+                        ZIndex = 2,
                         AutomaticSize = Enum.AutomaticSize.Y,
                         BackgroundColor3 = FromRGB(21, 21, 24)
                     }) SettingsItems["Settings"]:AddToTheme({BackgroundColor3 = "Section Background 2"})
@@ -2996,7 +2996,7 @@ local Library do
                         BorderSizePixel = 0,
                         Position = UDim2New(0, 8, 1, -8),
                         Size = UDim2New(1, -16, 0, 32),
-                        ZIndex = 21,
+                        ZIndex = 2,
                         TextSize = 14,
                         BackgroundColor3 = FromRGB(27, 26, 29)
                     }) SettingsItems["CloseButton"]:AddToTheme({BackgroundColor3 = "Element"})
@@ -3021,7 +3021,7 @@ local Library do
                         BackgroundTransparency = 1,
                         Position = UDim2New(0.5, 0, 0.5, 0),
                         BorderColor3 = FromRGB(0, 0, 0),
-                        ZIndex = 22,
+                        ZIndex = 2,
                         TextSize = 14,
                         BackgroundColor3 = FromRGB(255, 255, 255)
                     })
@@ -3169,18 +3169,12 @@ local Library do
                             end
                         end
                         
-                        if NewTween and NewTween.Tween then
-                            NewTween.Tween.Completed:Connect(function()
-                                Debounce = false 
-                                SettingsItems["Settings"].Instance.Visible = Settings.IsOpen
-                                task.wait(0.2)
-                                SettingsItems["Settings"].Instance.Parent = Settings.IsOpen and Library.Holder.Instance or Library.UnusedHolder.Instance
-                            end)
-                        else
-                            Debounce = false
+                        NewTween.Tween.Completed:Connect(function()
+                            Debounce = false 
                             SettingsItems["Settings"].Instance.Visible = Settings.IsOpen
-                            SettingsItems["Settings"].Instance.Parent = Settings.IsOpen and Library.Holder.Instance or Library.UnusedHolder.Instance
-                        end
+                            task.wait(0.2)
+                            SettingsItems["Settings"].Instance.Parent = not Settings.IsOpen and Library.UnusedHolder.Instance or Library.Holder.Instance
+                        end)
                     end
     
                     SettingsItems["CloseButton"]:Connect("MouseButton1Down", function()
@@ -3193,13 +3187,10 @@ local Library do
                         end
                     end)
     
-                    Settings.Window = Window
-                    Settings.Page = Window.Pages and Window.Pages[1] or nil
-                    Settings.Section = Settings
                     Settings.Items = SettingsItems
                     setmetatable(Settings, Library.Sections)
                 end
-                
+
                 Settings:Label("First gradient color"):Colorpicker({
                     Flag = "AccentColor",
                     Default = Library.Theme.Accent,
@@ -4945,15 +4936,15 @@ local Library do
                     })                    
 
                     SettingsItem["SettingsIcon"] = Instances:Create("ImageLabel", {
-                        Parent = Items["Toggle"].Instance,
+                        Parent = Items["Text"].Instance,
                         Name = "\0",
                         ImageColor3 = FromRGB(141, 141, 150),
                         BorderColor3 = FromRGB(0, 0, 0),
                         Size = UDim2New(0, 14, 0, 14),
-                        AnchorPoint = Vector2New(1, 0.5),
+                        AnchorPoint = Vector2New(0, 0.5),
                         Image = "rbxassetid://101500482366184",
                         BackgroundTransparency = 1,
-                        Position = UDim2New(1, -48, 0.5, 0),
+                        Position = UDim2New(1, 6, 0.5, 0),
                         ZIndex = 2,
                         BorderSizePixel = 0,
                         BackgroundColor3 = FromRGB(255, 255, 255)
