@@ -2312,6 +2312,7 @@ local Library do
                     BorderColor3 = FromRGB(0, 0, 0),
                     AnchorPoint = Vector2New(0.5, 0.5),
                     BackgroundTransparency = 0.12,
+                    ClipsDescendants = true,
                     Position = UDim2New(0.5519999861717224, 0, 0.5, 0),
                     Size = UDim2New(0, 677, 0, 644),
                     ZIndex = 2,
@@ -2589,7 +2590,7 @@ local Library do
                     BorderSizePixel = 0,
                     BackgroundColor3 = FromRGB(27, 25, 29)
                 })  Items["Content"]:AddToTheme({BackgroundColor3 = "Main Window"})
-
+                
                 Items["CloseButton"] = Instances:Create("TextButton", {
                     Parent = Items["MainFrame"].Instance,
                     Name = "\0",
@@ -2662,7 +2663,7 @@ local Library do
                 Instances:Create("UICorner", {
                     Parent = Items["LeftTabs"].Instance,
                     Name = "\0",
-                    CornerRadius = UDimNew(0, 4)
+                    CornerRadius = UDimNew(0, 0)
                 })      
                 
                 do
@@ -3102,7 +3103,7 @@ local Library do
                         Enabled = true,
                         Rotation = -115,
                         Color = RGBSequence{RGBSequenceKeypoint(0, FromRGB(255, 255, 255)), RGBSequenceKeypoint(1, FromRGB(143, 143, 143))}
-                    })  SettingsItems["Gradient"]:AddToTheme({Color = function()
+                    }):AddToTheme({Color = function()
                         return RGBSequence{RGBSequenceKeypoint(0, Library.Theme.Accent), RGBSequenceKeypoint(1, Library.Theme.AccentGradient)}
                     end})
 
@@ -3293,7 +3294,15 @@ local Library do
 
                         local LeftTabsCorner = Items["LeftTabs"].Instance:FindFirstChildOfClass("UICorner")
                         if LeftTabsCorner then
-                            LeftTabsCorner.CornerRadius = Radius
+                            LeftTabsCorner.CornerRadius = UDimNew(0, 0)
+                        end
+
+                        if Items["LeftBottomPixels"] then
+                            Items["LeftBottomPixels"].Instance.Visible = Value <= 0
+                        end
+
+                        if Items["RightBottomPixels"] then
+                            Items["RightBottomPixels"].Instance.Visible = Value <= 0
                         end
 
                         local SettingsCorner = SettingsItems["Settings"].Instance:FindFirstChildOfClass("UICorner")
