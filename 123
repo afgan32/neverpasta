@@ -4871,7 +4871,7 @@ local Library do
                 end)
             end
 
-            Items["Indicator"].Instance.Position = UDim2New(1, -30, 0.5, 0)
+            Items["Indicator"].Instance.Position = UDim2New(1, -12, 0.5, 0)
             Items["Indicator"].Instance.AnchorPoint = Vector2New(1, 0.5)
             Items["Text"].Instance.Position = UDim2New(0, 16, 0, 0)
 
