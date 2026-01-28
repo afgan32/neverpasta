@@ -128,7 +128,7 @@ local Library do
         Library.ClickShield.Instance.Visible = ShouldShow
         if ShouldShow then
             Library.ClickShield.Instance.Parent = Library.Holder.Instance
-            Library.ClickShield.Instance.ZIndex = 99998
+            Library.ClickShield.Instance.ZIndex = 1
         else
             Library.ClickShield.Instance.Parent = Library.UnusedHolder.Instance
         end
@@ -769,7 +769,7 @@ local Library do
         Size = UDim2New(1, 0, 1, 0),
         Position = UDim2New(0, 0, 0, 0),
         Visible = false,
-        ZIndex = 99997,
+        ZIndex = 1,
         Modal = true,
         BackgroundColor3 = FromRGB(0, 0, 0)
     })
@@ -5133,8 +5133,16 @@ local Library do
 
                         SettingsItem["Settings"].Instance.Visible = true
                         SettingsItem["Settings"].Instance.Parent = Library.Holder.Instance
-                        Library:UpdateClickShield()
                         
+                        for Index, Value in Library.OpenFrames do 
+                            if Value ~= Settings then 
+                                Value:SetOpen(false)
+                            end
+                        end
+    
+                        Library.OpenFrames[Settings] = Settings 
+                        Library:UpdateClickShield()
+    
                         RenderStepped = RunService.RenderStepped:Connect(function()
                             local Anchor = Items["SettingsIcon"] or Items["Indicator"]
                             local ClipParent = Toggle.Section.Items["Section"].Instance.Parent
@@ -5147,14 +5155,6 @@ local Library do
                                 0, Anchor.Instance.AbsolutePosition.Y + Anchor.Instance.AbsoluteSize.Y + (Size / 8))
                             SettingsItem["Settings"].Instance.Size = UDim2New(0, 245, 0, Size)
                         end)
-    
-                        for Index, Value in Library.OpenFrames do 
-                            if Value ~= Settings then 
-                                Value:SetOpen(false)
-                            end
-                        end
-    
-                        Library.OpenFrames[Settings] = Settings 
                     else
                         for Index, Value in Settings.Elements do
                             Value:RefreshPosition(false)
