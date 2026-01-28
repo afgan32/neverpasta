@@ -854,7 +854,9 @@ local Library do
             Connection = nil
         }
 
-        NewConnection.Connection = Event:Connect(Callback)
+        Library:Thread(function()
+            NewConnection.Connection = Event:Connect(Callback)
+        end)
 
         TableInsert(self.Connections, NewConnection)
         return NewConnection
