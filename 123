@@ -738,13 +738,15 @@ local Library do
         ZIndex = 100
     })
 
-    Library:Connect(Library.ClickShield.Instance.MouseButton1Down, function()
-        for _, FrameObj in Library.OpenFrames do
-            if FrameObj and FrameObj.SetOpen then
-                FrameObj:SetOpen(false)
+    if Library.ClickShield.Instance and Library.ClickShield.Instance.Instance then
+        Library.ClickShield.Instance.Instance.MouseButton1Down:Connect(function()
+            for _, FrameObj in Library.OpenFrames do
+                if FrameObj and FrameObj.SetOpen then
+                    FrameObj:SetOpen(false)
+                end
             end
-        end
-    end)
+        end)
+    end
 
     Library.NotifHolder = Instances:Create("Frame", {
         Parent = Library.Holder.Instance,
