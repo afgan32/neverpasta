@@ -2276,11 +2276,7 @@ local Library do
                 Pages = { },
                 Items = { },
                 IsOpen = false,
-                CurrentAlignment = "LeftTabs",
-                TopBarSize = 99,
-                LeftTabsWidth = 165,
-                LeftTabButtonWidth = 141,
-                LeftTabButtonHeight = 40
+                CurrentAlignment = "LeftTabs"
             }
 
             local Items = { } do
@@ -2315,7 +2311,7 @@ local Library do
                     BorderColor3 = FromRGB(0, 0, 0),
                     AnchorPoint = Vector2New(1, 0),
                     BackgroundTransparency = 0.15,
-                    Size = UDim2New(0, Window.LeftTabsWidth, 1, 0),
+                    Size = UDim2New(0, 165, 1, 0),
                     ZIndex = 2,
                     BorderSizePixel = 0,
                     BackgroundColor3 = FromRGB(27, 25, 29)
@@ -2561,8 +2557,8 @@ local Library do
                     Name = "\0",
                     BorderColor3 = FromRGB(0, 0, 0),
                     BackgroundTransparency = 0,
-                    Position = UDim2New(0, 0, 0, Window.TopBarSize),
-                    Size = UDim2New(1, 0, 1, -Window.TopBarSize),
+                    Position = UDim2New(0, 0, 0, 99),
+                    Size = UDim2New(1, 0, 1, -99),
                     ZIndex = 2,
                     BorderSizePixel = 0,
                     BackgroundColor3 = FromRGB(27, 25, 29)
@@ -3218,35 +3214,29 @@ local Library do
                 })
 
                 Settings:Slider({
-                    Name = "Top tab size",
-                    Default = Window.TopBarSize,
-                    Decimals = 0,
-                    Max = 180,
-                    Min = 60,
-                    Suffix = "px",
-                    Flag = "TopTabSize",
-                    Callback = function(Value)
-                        Window.TopBarSize = Value
-                        Items["Content"].Instance.Position = UDim2New(0, 0, 0, Window.TopBarSize)
-                        Items["Content"].Instance.Size = UDim2New(1, 0, 1, -Window.TopBarSize)
-                    end
-                })
-
-                Settings:Slider({
                     Name = "Left tab size",
-                    Default = Window.LeftTabsWidth,
-                    Decimals = 0,
-                    Max = 240,
+                    Default = 165,
+                    Decimals = 1,
+                    Max = 300,
                     Min = 120,
                     Suffix = "px",
                     Flag = "LeftTabSize",
                     Callback = function(Value)
-                        Window.LeftTabsWidth = Value
-                        Window.LeftTabButtonWidth = math.max(0, Window.LeftTabsWidth - 24)
-                        Items["LeftTabs"].Instance.Size = UDim2New(0, Window.LeftTabsWidth, 1, 0)
+                        Items["LeftTabs"].Instance.Size = UDim2New(0, Value, 1, 0)
+                    end
+                })
 
-                        for _, Page in Window.Pages do
-                            Page.Items.Inactive.Instance.Size = UDim2New(0, Window.LeftTabButtonWidth, 0, Window.LeftTabButtonHeight)
+                Settings:Slider({
+                    Name = "Top tab size",
+                    Default = 80,
+                    Decimals = 1,
+                    Max = 150,
+                    Min = 50,
+                    Suffix = "px",
+                    Flag = "TopTabSize",
+                    Callback = function(Value)
+                        if Items["TopTabs"] then
+                            Items["TopTabs"].Instance.Size = UDim2New(1, 0, 0, Value)
                         end
                     end
                 })
@@ -3390,7 +3380,7 @@ local Library do
                 elseif CurrentAlignment == "LeftTabs" or CurrentAlignment == "RightTabs" then
                     for Index, Value in Window.Pages do
                         Value.Items.Inactive.Instance.Parent = Items[CurrentAlignment].Instance
-                        Value.Items.Inactive.Instance.Size = UDim2New(0, Window.LeftTabButtonWidth, 0, Window.LeftTabButtonHeight)
+                        Value.Items.Inactive.Instance.Size = UDim2New(0, 141, 0, 40)
 
                         Value.Items.Text.Instance.Position = UDim2New(45, 0, 0.5, 0)
                         Value.Items.Text.Instance.AnchorPoint = Vector2New(0, 0.5)
@@ -3554,7 +3544,7 @@ local Library do
                     AutoButtonColor = false,
                     BackgroundTransparency = 1,
                     BorderSizePixel = 0,
-                    Size = UDim2New(0, Page.Window.LeftTabButtonWidth, 0, Page.Window.LeftTabButtonHeight),
+                    Size = UDim2New(0, 141, 0, 40),
                     ZIndex = 2,
                     TextSize = 14,
                     BackgroundColor3 = FromRGB(124, 163, 255)
