@@ -3228,15 +3228,15 @@ local Library do
 
                 Settings:Slider({
                     Name = "Top tab size",
-                    Default = 80,
+                    Default = 178.2,
                     Decimals = 1,
-                    Max = 150,
-                    Min = 50,
+                    Max = 300,
+                    Min = 99,
                     Suffix = "px",
                     Flag = "TopTabSize",
                     Callback = function(Value)
-                        Items["Content"].Instance.Position = UDim2New(0, 0, 0, Value + 19)
-                        Items["Content"].Instance.Size = UDim2New(1, 0, 1, -(Value + 19))
+                        Items["Content"].Instance.Position = UDim2New(0, 0, 0, Value)
+                        Items["Content"].Instance.Size = UDim2New(1, 0, 1, -Value)
                     end
                 })
 
