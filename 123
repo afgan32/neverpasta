@@ -5515,6 +5515,23 @@ local Library do
                     CornerRadius = UDimNew(1, 0)
                 })
 
+                Items["Track"] = Instances:Create("Frame", {
+                    Parent = Items["RealSlider"].Instance,
+                    Name = "\0",
+                    Size = UDim2New(1, 0, 1, 0),
+                    BorderColor3 = FromRGB(0, 0, 0),
+                    ZIndex = 2,
+                    BorderSizePixel = 0,
+                    BackgroundTransparency = 0.75,
+                    BackgroundColor3 = FromRGB(255, 255, 255)
+                })  Items["Track"]:AddToTheme({BackgroundColor3 = "Text"})
+
+                Instances:Create("UICorner", {
+                    Parent = Items["Track"].Instance,
+                    Name = "\0",
+                    CornerRadius = UDimNew(1, 0)
+                })
+
                 Items["Accent"] = Instances:Create("Frame", {
                     Parent = Items["RealSlider"].Instance,
                     Name = "\0",
@@ -5532,12 +5549,12 @@ local Library do
                 })
 
                 Items["Knob"] = Instances:Create("Frame", {
-                    Parent = Items["Slider"].Instance,
+                    Parent = Items["RealSlider"].Instance,
                     Name = "\0",
                     BorderColor3 = FromRGB(0, 0, 0),
                     Size = UDim2New(0, 8, 0, 8),
                     AnchorPoint = Vector2New(0.5, 0.5),
-                    Position = UDim2New(0, 110, 0.5, 0),
+                    Position = UDim2New(0, 0, 0.5, 0),
                     BorderSizePixel = 0,
                     ZIndex = 3,
                     BackgroundTransparency = 0,
@@ -5590,11 +5607,13 @@ local Library do
                 Slider.Value = Library:Round(MathClamp(Value, Slider.Min, Slider.Max), Slider.Decimals)
                 Library.Flags[Slider.Flag] = Slider.Value
 
-                Items["Accent"]:Tween(TweenInfo.new(Library.Tween.Time, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2New((Slider.Value - Slider.Min) / (Slider.Max - Slider.Min), 0, 1, 0)})
+                local Alpha = (Slider.Value - Slider.Min) / (Slider.Max - Slider.Min)
+
+                Items["Accent"]:Tween(TweenInfo.new(Library.Tween.Time, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2New(Alpha, 0, 1, 0)})
                 Items["Value"].Instance.Text = StringFormat("%s%s", Slider.Value, Slider.Suffix)
 
                 if Items["Knob"] then
-                    Items["Knob"].Instance.Position = UDim2New(0, Items["RealSlider"].Instance.AbsolutePosition.X + (Items["RealSlider"].Instance.AbsoluteSize.X * ((Slider.Value - Slider.Min) / (Slider.Max - Slider.Min))), 0.5, 0)
+                    Items["Knob"]:Tween(TweenInfo.new(Library.Tween.Time, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Position = UDim2New(Alpha, 0, 0.5, 0)})
                 end
 
                 if Slider.Callback then 
