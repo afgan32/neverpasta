@@ -5466,7 +5466,7 @@ local Library do
                     Parent = Slider.Section.Items["Content"].Instance,
                     Name = "\0",
                     BackgroundTransparency = 1,
-                    Size = UDim2New(1, 0, 0, 35),
+                    Size = UDim2New(1, 0, 0, 25),
                     BorderColor3 = FromRGB(0, 0, 0),
                     ZIndex = 2,
                     BorderSizePixel = 0,
@@ -5482,6 +5482,8 @@ local Library do
                     Text = Slider.Name,
                     AutomaticSize = Enum.AutomaticSize.X,
                     Size = UDim2New(0, 0, 0, 15),
+                    AnchorPoint = Vector2New(0, 0.5),
+                    Position = UDim2New(0, 0, 0.5, 0),
                     BackgroundTransparency = 1,
                     BorderSizePixel = 0,
                     BorderColor3 = FromRGB(0, 0, 0),
@@ -5498,10 +5500,10 @@ local Library do
                     BorderColor3 = FromRGB(0, 0, 0),
                     Text = "",
                     AutoButtonColor = false,
-                    AnchorPoint = Vector2New(0, 1),
+                    AnchorPoint = Vector2New(0, 0.5),
                     BorderSizePixel = 0,
-                    Position = UDim2New(0, 20, 1, -3),
-                    Size = UDim2New(1, -40, 0, 7),
+                    Position = UDim2New(0, 110, 0.5, 0),
+                    Size = UDim2New(1, -220, 0, 4),
                     ZIndex = 2,
                     TextSize = 14,
                     BackgroundColor3 = FromRGB(27, 26, 29)
@@ -5509,7 +5511,8 @@ local Library do
 
                 Instances:Create("UICorner", {
                     Parent = Items["RealSlider"].Instance,
-                    Name = "\0"
+                    Name = "\0",
+                    CornerRadius = UDimNew(1, 0)
                 })
 
                 Items["Accent"] = Instances:Create("Frame", {
@@ -5524,69 +5527,28 @@ local Library do
 
                 Instances:Create("UICorner", {
                     Parent = Items["Accent"].Instance,
-                    Name = "\0"
+                    Name = "\0",
+                    CornerRadius = UDimNew(1, 0)
                 })
 
-                Items["Icon"] = Instances:Create("ImageLabel", {
-                    Parent = Items["Accent"].Instance,
+                Items["Knob"] = Instances:Create("Frame", {
+                    Parent = Items["Slider"].Instance,
                     Name = "\0",
                     BorderColor3 = FromRGB(0, 0, 0),
-                    Size = UDim2New(0, 16, 0, 12),
+                    Size = UDim2New(0, 8, 0, 8),
                     AnchorPoint = Vector2New(0.5, 0.5),
-                    Image = "rbxassetid://117786983271442",
-                    BackgroundTransparency = 1,
-                    Position = UDim2New(1, 5, 0.5, 0),
-                    ZIndex = 2,
+                    Position = UDim2New(0, 110, 0.5, 0),
                     BorderSizePixel = 0,
+                    ZIndex = 3,
+                    BackgroundTransparency = 0,
                     BackgroundColor3 = FromRGB(255, 255, 255)
+                })  Items["Knob"]:AddToTheme({BackgroundColor3 = "Text"})
+
+                Instances:Create("UICorner", {
+                    Parent = Items["Knob"].Instance,
+                    Name = "\0",
+                    CornerRadius = UDimNew(1, 0)
                 })
-
-                Instances:Create("UIGradient", {
-                    Parent = Items["Accent"].Instance,
-                    Name = "\0",
-                    Rotation = -102,
-                    Color = RGBSequence{RGBSequenceKeypoint(0, FromRGB(255, 255, 255)), RGBSequenceKeypoint(1, FromRGB(166, 166, 166))}
-                }):AddToTheme({Color = function()
-                    return RGBSequence{RGBSequenceKeypoint(0, Library.Theme.Accent), RGBSequenceKeypoint(1, Library.Theme.AccentGradient)}
-                end})
-
-                Items["Plus"] = Instances:Create("TextButton", {
-                    Parent = Items["RealSlider"].Instance,
-                    Name = "\0",
-                    FontFace = Library.Font,
-                    TextColor3 = FromRGB(240, 240, 240),
-                    TextTransparency = 0.30000001192092896,
-                    Text = "+",
-                    BorderColor3 = FromRGB(0, 0, 0),
-                    AutoButtonColor = false,
-                    AnchorPoint = Vector2New(0, 0.5),
-                    Size = UDim2New(0, 20, 0, 20),
-                    BackgroundTransparency = 1,
-                    Position = UDim2New(1, 0, 0.5, -3),
-                    BorderSizePixel = 0,
-                    ZIndex = 2,
-                    TextSize = 14,
-                    BackgroundColor3 = FromRGB(255, 255, 255)
-                })  Items["Plus"]:AddToTheme({TextColor3 = "Text"})
-
-                Items["Minus"] = Instances:Create("TextButton", {
-                    Parent = Items["RealSlider"].Instance,
-                    Name = "\0",
-                    FontFace = Library.Font,
-                    TextColor3 = FromRGB(240, 240, 240),
-                    TextTransparency = 0.30000001192092896,
-                    Text = "-",
-                    BorderColor3 = FromRGB(0, 0, 0),
-                    AutoButtonColor = false,
-                    AnchorPoint = Vector2New(1, 0.5),
-                    Size = UDim2New(0, 20, 0, 20),
-                    BackgroundTransparency = 1,
-                    Position = UDim2New(0, -2, 0.5, -2),
-                    BorderSizePixel = 0,
-                    ZIndex = 2,
-                    TextSize = 14,
-                    BackgroundColor3 = FromRGB(255, 255, 255)
-                })  Items["Minus"]:AddToTheme({TextColor3 = "Text"})
 
                 Items["Value"] = Instances:Create("TextLabel", {
                     Parent = Items["Slider"].Instance,
@@ -5597,30 +5559,20 @@ local Library do
                     Text = "50%",
                     AutomaticSize = Enum.AutomaticSize.X,
                     Size = UDim2New(0, 0, 0, 15),
-                    AnchorPoint = Vector2New(1, 0),
+                    AnchorPoint = Vector2New(1, 0.5),
                     BorderSizePixel = 0,
                     BackgroundTransparency = 1,
-                    Position = UDim2New(1, 0, 0, 0),
+                    Position = UDim2New(1, 0, 0.5, 0),
                     BorderColor3 = FromRGB(0, 0, 0),
                     ZIndex = 2,
                     TextSize = 14,
                     BackgroundColor3 = FromRGB(255, 255, 255)
                 })  Items["Value"]:AddToTheme({TextColor3 = "Text"})
-
-                Items["RealSlider"]:OnHover(function()
-                    Items["Icon"]:Tween(TweenInfo.new(0.15, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2New(0, 18, 0, 14)})
-                end)
-
-                Items["RealSlider"]:OnHoverLeave(function()
-                    Items["Icon"]:Tween(TweenInfo.new(0.15, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2New(0, 16, 0, 12)})
-                end)
             end
 
             --Slider.Section.Items["Fade"].Instance.Size = UDim2New(1, 0, 0, Slider.Section.Items["Content"].Instance.AbsoluteSize.X - 180)
 
             --Items["Value"].Instance.TextTransparency = 1
-            Items["RealSlider"].Instance.Position = UDim2New(0, 80, 1, -3)
-            Items["Text"].Instance.Position = UDim2New(0, 80, 0, 0)
 
             function Slider:Get()
                 return Slider.Value 
@@ -5631,15 +5583,7 @@ local Library do
             end
 
             function Slider:RefreshPosition(Bool)
-                if Bool then 
-                    Items["RealSlider"]:Tween(TweenInfo.new(1, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Position = UDim2New(0, 20, 1, -3)})
-                    Items["Text"]:Tween(TweenInfo.new(1, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Position = UDim2New(0, 0, 0, 0)})
-                   -- Items["Value"].Instance.TextTransparency = 0.3
-                else
-                    Items["RealSlider"].Instance.Position = UDim2New(0, 80, 1, -3)
-                    Items["Text"].Instance.Position = UDim2New(0, 80, 0, 0)
-                   -- Items["Value"].Instance.TextTransparency = 1
-                end
+                return
             end
 
             function Slider:Set(Value)
@@ -5649,24 +5593,14 @@ local Library do
                 Items["Accent"]:Tween(TweenInfo.new(Library.Tween.Time, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2New((Slider.Value - Slider.Min) / (Slider.Max - Slider.Min), 0, 1, 0)})
                 Items["Value"].Instance.Text = StringFormat("%s%s", Slider.Value, Slider.Suffix)
 
-                if Slider.Value >= Slider.Max then 
-                    Items["Icon"].Instance.Position = UDim2New(1, -5, 0.5, 0)
-                else
-                    Items["Icon"].Instance.Position = UDim2New(1, 5, 0.5, 0)
+                if Items["Knob"] then
+                    Items["Knob"].Instance.Position = UDim2New(0, Items["RealSlider"].Instance.AbsolutePosition.X + (Items["RealSlider"].Instance.AbsoluteSize.X * ((Slider.Value - Slider.Min) / (Slider.Max - Slider.Min))), 0.5, 0)
                 end
 
                 if Slider.Callback then 
                     Library:SafeCall(Slider.Callback, Slider.Value)
                 end
             end
-
-            Items["Plus"]:Connect("MouseButton1Down", function()
-                Slider:Set(Slider.Value + Slider.Decimals)
-            end)
-
-            Items["Minus"]:Connect("MouseButton1Down", function()
-                Slider:Set(Slider.Value - Slider.Decimals)
-            end)
 
             local InputChanged 
             
